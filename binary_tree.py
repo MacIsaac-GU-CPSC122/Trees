@@ -1,4 +1,5 @@
 from typing import Any
+import numpy as np
 
 class _Node:
     def __init__(self, item:Any, left: Any=None, right:Any=None):
@@ -12,19 +13,23 @@ class BinaryTree:
         self._root = None
 
     def __str__(self) -> str:
-        # pre-order string
+        # in-order string
+        # For PA8, you should be 
+        # returning a pre-order traversal
         return self._str_helper(self._root, 0)
 
     def _str_helper(self, curr_node: _Node, level:int) -> str:
         if curr_node is None:
             return ""
-        
-        # visit node, left, right
-        s = f"{"  "*level}{curr_node._item}\n"
+
+        # In-order traversal
+        # left, visit node, right
+        s = "" 
         s += self._str_helper(curr_node._left, level + 1)
+        s += f"{" "*level}{curr_node._item}\n"
         s += self._str_helper(curr_node._right, level + 1)
         return s
-    
+
     def __len__(self) -> int:
         return 0 # TODO: fix this
     
@@ -77,3 +82,33 @@ if __name__ == "__main__":
     bt = BinaryTree()
     bt._root = a
     print(bt)
+
+    # Code below is taking the in-order traversal code, 
+    # turning it into a matrix, transposing it
+    # and printing it out so it looks like a tree.
+    # This was done for fun, there are much better ways
+    # (ie. using level by level traversal) to 
+    # do a "pretty print"
+    st = str(bt)
+    matrix_tree = []
+    st = st.split("\n")
+    n = len(st[0])
+    print(n)
+    for line in st:
+        row = list(line)
+        for i in range(n-len(row)):
+            row.append(" ")
+        matrix_tree.append(row)
+    print(matrix_tree)
+    arr = np.array(matrix_tree)
+    print(arr)
+    # transpose
+    arr = arr.T
+    print(arr)
+    st = ""
+    for row in arr:
+        for item in row:
+            st += item
+        st += "\n"
+
+    print(st)
