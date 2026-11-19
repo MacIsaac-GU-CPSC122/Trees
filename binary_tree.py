@@ -26,6 +26,7 @@ class BinaryTree:
         # left, visit node, right
         s = "" 
         s += self._str_helper(curr_node._left, level + 1)
+        # adds spacing based on the level of the node, for pretty printing
         s += f"{" "*level}{curr_node._item}\n"
         s += self._str_helper(curr_node._right, level + 1)
         return s
@@ -93,22 +94,25 @@ if __name__ == "__main__":
     matrix_tree = []
     st = st.split("\n")
     n = len(st[0])
-    print(n)
+    # create a matrix based on the string
     for line in st:
         row = list(line)
+        # add padding when needed
         for i in range(n-len(row)):
             row.append(" ")
         matrix_tree.append(row)
     print(matrix_tree)
     arr = np.array(matrix_tree)
+    print("Matrix")
     print(arr)
     # transpose
     arr = arr.T
-    print(arr)
     st = ""
+    print("Transposed Matrix")
+    print(arr)
+    # matrix to pretty print
     for row in arr:
         for item in row:
             st += item
         st += "\n"
-
     print(st)
